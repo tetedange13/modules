@@ -24,18 +24,20 @@ nextflow_workflow {
                     file(params.modules_testdata_base_path + 'genomics/homo_sapiens/illumina/vcf/sv_query.vcf.gz', checkIfExists: true),
                     file(params.modules_testdata_base_path + 'genomics/homo_sapiens/illumina/vcf/sv_query.vcf.gz.tbi', checkIfExists: true),
                     [],
-                    false
+                    false,
+                    'html'
                 ])
                 input[1] = '/data/work/CHUUMI/felix/data/AnnotSV_annotations-v3.5'
-                input[2] = channel.of([
-                    [ id:'test' ],
-                    []
-                ])
+                input[2] = '/data/work/CHUUMI/felix/data/vcf2circos/Static/options.json'
                 input[3] = channel.of([
                     [ id:'test' ],
                     []
                 ])
                 input[4] = channel.of([
+                    [ id:'test' ],
+                    []
+                ])
+                input[5] = channel.of([
                     [ id:'test' ],
                     []
                 ])
