@@ -1,0 +1,52 @@
+nextflow_workflow {
+
+    name "Test Subworkflow VCF_ANNOTATE_ANNOTSV"
+    script "../main.nf"
+    workflow "VCF_ANNOTATE_ANNOTSV"
+
+    tag "subworkflows"
+    tag "subworkflows_nfcore"
+    tag "subworkflows/vcf_annotate_annotsv"
+    tag "annotsv"
+    tag "annotsv/installannotations"
+    tag "annotsv/annotsv"
+    tag "knotannotsv"
+    //tag "vcf2circos"
+
+
+    test("homo_sapiens - vcf, download_cache, knot_html") {
+
+        when {
+            workflow {
+                """
+                input[0] = channel.of([
+                    [ id:'test', single_end:false ],
+                    file(params.modules_testdata_base_path + 'genomics/homo_sapiens/illumina/vcf/sv_query.vcf.gz', checkIfExists: true),
+                    file(params.modules_testdata_base_path + 'genomics/homo_sapiens/illumina/vcf/sv_query.vcf.gz.tbi', checkIfExists: true),
+                    [],
+                    false
+                ])
+                input[1] = '/data/work/CHUUMI/felix/data/AnnotSV_annotations-v3.5'
+                input[2] = channel.of([
+                    [ id:'test' ],
+                    []
+                ])
+                input[3] = channel.of([
+                    [ id:'test' ],
+                    []
+                ])
+                input[4] = channel.of([
+                    [ id:'test' ],
+                    []
+                ])
+                """
+            }
+        }
+        then {
+
+            assertAll(
+                { assert workflow.success }
+            )
+        }
+    }
+}

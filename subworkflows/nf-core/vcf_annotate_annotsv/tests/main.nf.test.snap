@@ -1,0 +1,96 @@
+{
+    "homo_sapiens - vcf, download_cache": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": false
+                        },
+                        "test.tsv:md5,756bd7485840e964f9041c823ee0272b"
+                    ]
+                ],
+                "1": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": false
+                        },
+                        "test.html:md5,e1aa0065e691a990c3ea888e9c76a9f6"
+                    ]
+                ],
+                "annotsv_tsv": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": false
+                        },
+                        "test.tsv:md5,756bd7485840e964f9041c823ee0272b"
+                    ]
+                ],
+                "knotannotsv_out": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": false
+                        },
+                        "test.html:md5,e1aa0065e691a990c3ea888e9c76a9f6"
+                    ]
+                ]
+            }
+        ],
+        "timestamp": "2026-04-17T11:29:21.229941161",
+        "meta": {
+            "nf-test": "0.9.5",
+            "nextflow": "26.03.2"
+        }
+    },
+    "homo_sapiens - vcf, download_cache, knot_html": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": false
+                        },
+                        "test.tsv:md5,756bd7485840e964f9041c823ee0272b"
+                    ]
+                ],
+                "1": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": false
+                        },
+                        "test.html:md5,6550e8b4c142a39dff4ac933776cf150"
+                    ]
+                ],
+                "annotsv_tsv": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": false
+                        },
+                        "test.tsv:md5,756bd7485840e964f9041c823ee0272b"
+                    ]
+                ],
+                "knotannotsv_out": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": false
+                        },
+                        "test.html:md5,6550e8b4c142a39dff4ac933776cf150"
+                    ]
+                ]
+            }
+        ],
+        "timestamp": "2026-04-17T13:20:28.162756134",
+        "meta": {
+            "nf-test": "0.9.5",
+            "nextflow": "26.03.2"
+        }
+    }
+}
