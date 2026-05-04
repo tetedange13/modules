@@ -14,7 +14,7 @@ nextflow_workflow {
     tag "vcf2circos"
 
 
-    test("homo_sapiens - vcf, download_cache, knot_html") {
+    test("homo_sapiens - vcf, download_annotsv_cache, download_vcf2circos_cache, knot_out_html, circos_out_html") {
         config "./nextflow.config"
 
         when {
