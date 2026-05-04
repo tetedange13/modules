@@ -11,10 +11,11 @@ nextflow_workflow {
     tag "annotsv/installannotations"
     tag "annotsv/annotsv"
     tag "knotannotsv"
-    //tag "vcf2circos"
+    tag "vcf2circos"
 
 
     test("homo_sapiens - vcf, download_cache, knot_html") {
+        config "./nextflow.config"
 
         when {
             workflow {

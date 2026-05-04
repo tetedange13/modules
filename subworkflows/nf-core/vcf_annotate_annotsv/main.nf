@@ -82,6 +82,6 @@ workflow VCF_ANNOTATE_ANNOTSV {
 
     emit:
     annotsv_tsv      = ANNOTSV_ANNOTSV.out.tsv           // channel: [ val(meta), [ annotsv_tsv ] ]
-    knotannotsv_out      = KNOTANNOTSV.out.out_file          // channel: [ val(meta), [ knot_out ] ]
+    knotannotsv_out      = KNOTANNOTSV.out.output_file          // channel: [ val(meta), [ knot_out ] ]
     circos_plot      = VCF2CIRCOS.out.circos          // channel: [ val(meta), [ circos ] ]
 }
