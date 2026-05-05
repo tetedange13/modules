@@ -1,0 +1,62 @@
+{
+    "homo_sapiens - vcf, download_annotsv_cache, download_vcf2circos_cache, knot_out_html, circos_out_html - stub": {
+        "content": [
+            {
+                "annotsv_tsv": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": false
+                        },
+                        "test.tsv:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "circos_plot": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": false
+                        },
+                        "circos_test.html:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "knotannotsv_out": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": false
+                        },
+                        "knot_test.html:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ]
+            }
+        ],
+        "timestamp": "2026-05-05T11:48:17.461828088",
+        "meta": {
+            "nf-test": "0.9.5",
+            "nextflow": "26.03.2"
+        }
+    },
+    "homo_sapiens - vcf, download_annotsv_cache, download_vcf2circos_cache, knot_out_html, circos_out_html": {
+        "content": [
+            {
+                
+            },
+            [
+                [
+                    {
+                        "id": "test",
+                        "single_end": false
+                    },
+                    "test.tsv:md5,756bd7485840e964f9041c823ee0272b"
+                ]
+            ],
+            "test_knotAnnotSV_HTML_output_lines_count: 10876"
+        ],
+        "timestamp": "2026-05-05T11:41:44.719778378",
+        "meta": {
+            "nf-test": "0.9.5",
+            "nextflow": "26.03.2"
+        }
+    }
+}
