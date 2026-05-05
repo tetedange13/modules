@@ -11,11 +11,12 @@ workflow VCF_ANNOTATE_ANNOTSV {
     ch_vcf // channel: [ val(meta), [ vcf, vcf_index, candidate_small_variants, knot_output_xl, vcf2circos_extension ]
     annotsv_annotations
     vcf2circos_annotations
-    ch_annotsv_candidate_genes
-    ch_annotsv_false_positive_snv
-    ch_annotsv_gene_transcripts
+    ch_annotsv_candidate_genes // channel: [ val(meta), [ annotsv_candidate_genes ]
+    ch_annotsv_false_positive_snv // channel: [ val(meta), [ annotsv_false_positive_snv ]
+    ch_annotsv_gene_transcripts // channel: [ val(meta), [ annotsv_gene_transcripts ]
 
     main:
+    // Run annotSV
     if(!annotsv_annotations) {
         ANNOTSV_INSTALLANNOTATIONS()
         ANNOTSV_INSTALLANNOTATIONS.out.annotations
@@ -35,9 +36,6 @@ workflow VCF_ANNOTATE_ANNOTSV {
                 .set { ch_annotsv_annotations }
         }
     }
-
-
-    // Run annotSV
     ch_vcf
         .map { meta, vcf, vcf_index, candidate_small_variants, _knot_output_xl, _vcf2circos_extension -> [ meta, vcf, vcf_index, candidate_small_variants] }
         .set { ch_annotsv_in }
@@ -49,7 +47,7 @@ workflow VCF_ANNOTATE_ANNOTSV {
         ch_annotsv_gene_transcripts,
     )
 
-    // Run knotAnnotSV
+    // Run knotAnnotSV on TSV annotated by AnnotSV
     ch_vcf
         .map { meta, _vcf, _vcf_index, _candidate_small_variants, knot_output_xl, _vcf2circos_extension -> [ meta, knot_output_xl] }
         .set { ch_knot_output_xl }
@@ -58,7 +56,7 @@ workflow VCF_ANNOTATE_ANNOTSV {
         .set { ch_knot_in }
     KNOTANNOTSV ( ch_knot_in )
 
-    // Run vcf2circos
+    // Run vcf2circos on sub-wf input VCF
     if(!vcf2circos_annotations) {
         UNTAR_VCF2CIRCOS([ [], 'https://www.lbgi.fr/~lamouche/vcf2circos/config_vcf2circos_29032023.tar.gz' ])
         UNTAR_VCF2CIRCOS.out.untar
@@ -88,5 +86,5 @@ workflow VCF_ANNOTATE_ANNOTSV {
     emit:
     annotsv_tsv      = ANNOTSV_ANNOTSV.out.tsv           // channel: [ val(meta), [ annotsv_tsv ] ]
     knotannotsv_out      = KNOTANNOTSV.out.output_file          // channel: [ val(meta), [ knot_out ] ]
-    circos_plot      = VCF2CIRCOS.out.circos          // channel: [ val(meta), [ circos ] ]
+    circos_plot      = VCF2CIRCOS.out.circos          // channel: [ val(meta), [ circos_plot ] ]
 }
