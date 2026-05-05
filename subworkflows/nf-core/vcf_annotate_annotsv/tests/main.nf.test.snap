@@ -11,6 +11,15 @@
                         "test.tsv:md5,d41d8cd98f00b204e9800998ecf8427e"
                     ]
                 ],
+                "annotsv_unannotated_tsv": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": false
+                        },
+                        "test.unannotated.tsv:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
                 "circos_plot": [
                     [
                         {
@@ -31,7 +40,7 @@
                 ]
             }
         ],
-        "timestamp": "2026-05-05T11:48:17.461828088",
+        "timestamp": "2026-05-05T12:06:00.966045949",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.03.2"
@@ -51,9 +60,18 @@
                     "test.tsv:md5,756bd7485840e964f9041c823ee0272b"
                 ]
             ],
+            [
+                [
+                    {
+                        "id": "test",
+                        "single_end": false
+                    },
+                    "test.unannotated.tsv:md5,7e367ca08b44d0f370b35753733a5e1b"
+                ]
+            ],
             "test_knotAnnotSV_HTML_output_lines_count: 10876"
         ],
-        "timestamp": "2026-05-05T11:41:44.719778378",
+        "timestamp": "2026-05-05T12:05:40.120685148",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.03.2"

@@ -53,6 +53,7 @@ nextflow_workflow {
                 { assert snapshot(
                     workflow.out.findAll { key, val -> key.startsWith('versions') },
                     workflow.out.annotsv_tsv,
+                    workflow.out.annotsv_unannotated_tsv,
                     "test_knotAnnotSV_HTML_output_lines_count: ${path(workflow.out.knotannotsv_out[0][1]).readLines().size()}"
                     ).match()
                 }
