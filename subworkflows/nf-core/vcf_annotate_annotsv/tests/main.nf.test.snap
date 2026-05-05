@@ -46,6 +46,38 @@
             "nextflow": "26.03.2"
         }
     },
+    "homo_sapiens - vcf, download_annotsv_cache, download_vcf2circos_cache, knot_out_excel, circos_out_json": {
+        "content": [
+            {
+                
+            },
+            [
+                [
+                    {
+                        "id": "test",
+                        "single_end": false
+                    },
+                    "test.tsv:md5,756bd7485840e964f9041c823ee0272b"
+                ]
+            ],
+            [
+                [
+                    {
+                        "id": "test",
+                        "single_end": false
+                    },
+                    "test.unannotated.tsv:md5,7e367ca08b44d0f370b35753733a5e1b"
+                ]
+            ],
+            "test_knotAnnotSV_Excel_output_min_size: false",
+            "test_vcf2circos_JSON_output_size: 1415760"
+        ],
+        "timestamp": "2026-05-05T15:02:15.811995722",
+        "meta": {
+            "nf-test": "0.9.5",
+            "nextflow": "26.03.2"
+        }
+    },
     "homo_sapiens - vcf, download_annotsv_cache, download_vcf2circos_cache, knot_out_html, circos_out_html": {
         "content": [
             {

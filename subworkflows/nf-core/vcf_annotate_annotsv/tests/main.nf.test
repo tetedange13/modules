@@ -62,6 +62,52 @@ nextflow_workflow {
         }
     }
 
+    test("homo_sapiens - vcf, download_annotsv_cache, download_vcf2circos_cache, knot_out_excel, circos_out_json") {
+
+        when {
+            workflow {
+                """
+                input[0] = channel.of([
+                    [ id:'test', single_end:false ],
+                    file(params.modules_testdata_base_path + 'genomics/homo_sapiens/illumina/vcf/sv_query.vcf.gz', checkIfExists: true),
+                    file(params.modules_testdata_base_path + 'genomics/homo_sapiens/illumina/vcf/sv_query.vcf.gz.tbi', checkIfExists: true),
+                    [],
+                    true,
+                    'json'
+                ])
+                input[1] = '/data/work/CHUUMI/felix/data/AnnotSV_annotations-v3.5'
+                input[2] = '/data/work/CHUUMI/felix/data/vcf2circos/Static'
+                input[3] = channel.of([
+                    [ id:'test' ],
+                    []
+                ])
+                input[4] = channel.of([
+                    [ id:'test' ],
+                    []
+                ])
+                input[5] = channel.of([
+                    [ id:'test' ],
+                    []
+                ])
+                """
+            }
+        }
+        then {
+
+            assertAll(
+                { assert workflow.success },
+                { assert snapshot(
+                    workflow.out.findAll { key, val -> key.startsWith('versions') },
+                    workflow.out.annotsv_tsv,
+                    workflow.out.annotsv_unannotated_tsv,
+                    "test_knotAnnotSV_Excel_output_min_size: ${file(workflow.out.knotannotsv_out[0][1]).length() >= 197250}",
+                    "test_vcf2circos_JSON_output_size: ${file(workflow.out.vcf2circos_out[0][1]).length()}"
+                    ).match()
+                }
+            )
+        }
+    }
+
     test("homo_sapiens - vcf, download_annotsv_cache, download_vcf2circos_cache, knot_out_html, circos_out_html - stub") {
 
         options "-stub"
