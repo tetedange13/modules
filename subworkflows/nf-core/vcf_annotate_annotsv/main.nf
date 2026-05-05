@@ -10,7 +10,7 @@ workflow VCF_ANNOTATE_ANNOTSV {
     take:
     ch_vcf // channel: [ val(meta), [ vcf, vcf_index, candidate_small_variants, knot_output_xl, vcf2circos_extension ]
     annotsv_annotations
-    vcf2circos_options
+    vcf2circos_annotations
     ch_annotsv_candidate_genes
     ch_annotsv_false_positive_snv
     ch_annotsv_gene_transcripts
@@ -58,27 +58,32 @@ workflow VCF_ANNOTATE_ANNOTSV {
         .set { ch_knot_in }
     KNOTANNOTSV ( ch_knot_in )
 
-    // Run vcf2circos if 'options.json' provided
-    if(vcf2circos_options) {
-        if(vcf2circos_options.endsWith(".tar.gz")) {
-            UNTAR_VCF2CIRCOS(vcf2circos_options)
+    // Run vcf2circos
+    if(!vcf2circos_annotations) {
+        UNTAR_VCF2CIRCOS([ [], 'https://www.lbgi.fr/~lamouche/vcf2circos/config_vcf2circos_29032023.tar.gz' ])
+        UNTAR_VCF2CIRCOS.out.untar
+            .collect()
+            .set { ch_vcf2circos_annot }
+    } else {
+        if(vcf2circos_annotations.endsWith(".tar.gz")) {
+            UNTAR_VCF2CIRCOS(vcf2circos_annotations)
             UNTAR_VCF2CIRCOS.out.untar
                 .collect()
-                .set { ch_vcf2circos_options }
+                .set { ch_vcf2circos_annot }
         } else {
-            channel.fromPath(vcf2circos_options)
+            channel.fromPath(vcf2circos_annotations)
                 .map { annotations -> [ [id:"vcf2circos"], annotations ] }
                 .collect()
-                .set { ch_vcf2circos_options }
+                .set { ch_vcf2circos_annot }
         }
-        ch_vcf
-            .map { meta, vcf, vcf_index, _candidate_small_variants, _knot_output_xl, vcf2circos_extension -> [ meta, vcf, vcf_index, vcf2circos_extension] }
-            .set { ch_vcf2circos_in }
-        VCF2CIRCOS(
-            ch_vcf2circos_in,
-            ch_vcf2circos_options,
-        )
     }
+    ch_vcf
+        .map { meta, vcf, vcf_index, _candidate_small_variants, _knot_output_xl, vcf2circos_extension -> [ meta, vcf, vcf_index, vcf2circos_extension] }
+        .set { ch_vcf2circos_in }
+    VCF2CIRCOS(
+        ch_vcf2circos_in,
+        ch_vcf2circos_annot,
+    )
 
     emit:
     annotsv_tsv      = ANNOTSV_ANNOTSV.out.tsv           // channel: [ val(meta), [ annotsv_tsv ] ]
