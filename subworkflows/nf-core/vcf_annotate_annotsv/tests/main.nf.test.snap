@@ -20,15 +20,6 @@
                         "test.unannotated.tsv:md5,d41d8cd98f00b204e9800998ecf8427e"
                     ]
                 ],
-                "circos_plot": [
-                    [
-                        {
-                            "id": "test",
-                            "single_end": false
-                        },
-                        "circos_test.html:md5,d41d8cd98f00b204e9800998ecf8427e"
-                    ]
-                ],
                 "knotannotsv_out": [
                     [
                         {
@@ -37,10 +28,19 @@
                         },
                         "knot_test.html:md5,d41d8cd98f00b204e9800998ecf8427e"
                     ]
+                ],
+                "vcf2circos_out": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": false
+                        },
+                        "circos_test.html:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
                 ]
             }
         ],
-        "timestamp": "2026-05-05T12:06:00.966045949",
+        "timestamp": "2026-05-05T14:01:13.409939581",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.03.2"
@@ -69,9 +69,10 @@
                     "test.unannotated.tsv:md5,7e367ca08b44d0f370b35753733a5e1b"
                 ]
             ],
-            "test_knotAnnotSV_HTML_output_lines_count: 10876"
+            "test_knotAnnotSV_HTML_output_lines_count: 10876",
+            "test_vcf2circos_HTML_output_lines_count: 15"
         ],
-        "timestamp": "2026-05-05T12:05:40.120685148",
+        "timestamp": "2026-05-05T14:00:53.407333",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.03.2"
