@@ -75,13 +75,24 @@ workflow VCF_ANNOTATE_ANNOTSV {
                 .set { ch_vcf2circos_annot }
         }
     }
-    ch_vcf
-        .map { meta, vcf, vcf_index, _candidate_small_variants, _knot_output_xl, vcf2circos_extension -> [ meta, vcf, vcf_index, vcf2circos_extension] }
-        .set { ch_vcf2circos_in }
-    VCF2CIRCOS(
-        ch_vcf2circos_in,
-        ch_vcf2circos_annot,
-    )
+    if(ANNOTSV_ANNOTSV.out.vcf) {
+        ANNOTSV_ANNOTSV.out.vcf
+            .join(ch_vcf)
+            .map { meta, annotsv_vcf, _in_vcf, _vcf_index, _candidate_small_variants, _knot_output_xl, vcf2circos_extension -> [ meta, annotsv_vcf, [], vcf2circos_extension] }
+            .set { ch_vcf2circos_in }
+        VCF2CIRCOS(
+            ch_vcf2circos_in,
+            ch_vcf2circos_annot,
+        )
+    } else {
+        ch_vcf
+            .map { meta, vcf, vcf_index, _candidate_small_variants, _knot_output_xl, vcf2circos_extension -> [ meta, vcf, vcf_index, vcf2circos_extension] }
+            .set { ch_vcf2circos_in }
+        VCF2CIRCOS(
+            ch_vcf2circos_in,
+            ch_vcf2circos_annot,
+        )
+    }
 
     emit:
     annotsv_tsv      = ANNOTSV_ANNOTSV.out.tsv           // channel: [ val(meta), [ annotsv_tsv ] ]
