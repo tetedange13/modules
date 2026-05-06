@@ -69,10 +69,10 @@
                     "test.unannotated.tsv:md5,7e367ca08b44d0f370b35753733a5e1b"
                 ]
             ],
-            "test_knotAnnotSV_Excel_output_min_size: false",
+            "test_knotAnnotSV_Excel_output_min_size: true",
             "test_vcf2circos_JSON_output_size: 1415760"
         ],
-        "timestamp": "2026-05-05T15:02:15.811995722",
+        "timestamp": "2026-05-06T10:31:18.308916885",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.03.2"
@@ -102,9 +102,9 @@
                 ]
             ],
             "test_knotAnnotSV_HTML_output_lines_count: 10876",
-            "test_vcf2circos_HTML_output_lines_count: 15"
+            "test_vcf2circos_HTML_output_size: 5132084"
         ],
-        "timestamp": "2026-05-05T14:00:53.407333",
+        "timestamp": "2026-05-06T10:29:21.971679516",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.03.2"

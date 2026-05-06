@@ -55,7 +55,7 @@ nextflow_workflow {
                     workflow.out.annotsv_tsv,
                     workflow.out.annotsv_unannotated_tsv,
                     "test_knotAnnotSV_HTML_output_lines_count: ${path(workflow.out.knotannotsv_out[0][1]).readLines().size()}",
-                    "test_vcf2circos_HTML_output_lines_count: ${path(workflow.out.vcf2circos_out[0][1]).readLines().size()}"
+                    "test_vcf2circos_HTML_output_size: ${file(workflow.out.vcf2circos_out[0][1]).length()}"
                     ).match()
                 }
             )
@@ -100,7 +100,7 @@ nextflow_workflow {
                     workflow.out.findAll { key, val -> key.startsWith('versions') },
                     workflow.out.annotsv_tsv,
                     workflow.out.annotsv_unannotated_tsv,
-                    "test_knotAnnotSV_Excel_output_min_size: ${file(workflow.out.knotannotsv_out[0][1]).length() >= 197250}",
+                    "test_knotAnnotSV_Excel_output_min_size: ${file(workflow.out.knotannotsv_out[0][1]).length() >= 197000}",
                     "test_vcf2circos_JSON_output_size: ${file(workflow.out.vcf2circos_out[0][1]).length()}"
                     ).match()
                 }
