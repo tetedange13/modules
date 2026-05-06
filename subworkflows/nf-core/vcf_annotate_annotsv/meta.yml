@@ -1,44 +1,79 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/nf-core/modules/master/subworkflows/yaml-schema.json
 name: "vcf_annotate_annotsv"
-## TODO nf-core: Add a description of the subworkflow and list keywords
-description: Sort SAM/BAM/CRAM file
+description: On structural variants VCF, run AnnotSV then KnotAnnotSV and vcf2circos
 keywords:
-  - sort
-  - bam
-  - sam
-  - cram
-## TODO nf-core: Add a list of the modules and/or subworkflows used in the subworkflow
+  - genomics
+  - structural
+  - variants
+  - sv
+  - annotation
+  - circos
+  - plot
 components:
-  - samtools/sort
-  - samtools/index
-## TODO nf-core: List all of the channels used as input with a description and their structure
+  - annotsv/installannotations
+  - untar
+  - annotsv/annotsv
+  - knotannotsv
+  - vcf2circos
 input:
-  - ch_bam:
-      type: file
+  - ch_vcf:
+      type: channel
       description: |
-        The input channel containing the BAM/CRAM/SAM files
-        Structure: [ val(meta), path(bam) ]
-      pattern: "*.{bam/cram/sam}"
-## TODO nf-core: List all of the channels used as output with a descriptions and their structure
+        The input channel containing the VCF files
+        Structure: [ val(meta), [ vcf, vcf_index, candidate_small_variants, knot_output_xl, vcf2circos_extension ]
+  - annotsv_annotations:
+      type: path
+      description: |
+        Path to annotations cache for AnnotSV
+        Structure: val(meta), [ vcf, annotsv_annotations ]
+  - vcf2circos_annotations:
+      type: path
+      description: |
+        Path to annotations cache for vcf2circos
+        Structure: val(meta), [ vcf2circos_annotations ]
+  - ch_annotsv_candidate_genes:
+      type: channel
+      description: |
+        The input channel containing candidate_genes for AnnotSV
+        Structure: [ val(meta), [ annotsv_candidate_genes ]
+      pattern: "*.txt"
+  - ch_annotsv_false_positive_snv:
+      type: channel
+      description: |
+        The input channel containing false_positive_snvs file for AnnotSV
+        Structure: [ val(meta), [ annotsv_false_positive_snvs ] ]
+      pattern: "*.{vcf,vcf.gz}"
+  - ch_annotsv_gene_transcripts:
+      type: channel
+      description: |
+        The input channel containing gene_transcripts file for AnnotSV
+        Structure: [ val(meta), [ annotsv_gene_transcripts ] ]
+      pattern: "*.txt"
 output:
-  - bam:
+  - annotsv_tsv:
       type: file
       description: |
-        Channel containing BAM files
-        Structure: [ val(meta), path(bam) ]
-      pattern: "*.bam"
-  - bai:
+        Channel containing TSV files of variants annotated by AnnotSV
+        Structure: [ val(meta), path(annotsv_tsv) ]
+      pattern: "${prefix}.tsv"
+  - annotsv_unannotated_tsv:
       type: file
       description: |
-        Channel containing indexed BAM (BAI) files
-        Structure: [ val(meta), path(bai) ]
-      pattern: "*.bai"
-  - csi:
+        Channel containing TSV files of unannotated variants by AnnotSV
+        Structure: [ val(meta), path(annotsv_unannotated tsv) ]
+      pattern: "${prefix}_unannotated.tsv"
+  - knotannotsv_out:
       type: file
       description: |
-        Channel containing CSI files
-        Structure: [ val(meta), path(csi) ]
-      pattern: "*.csi"
+        Channel containing output files of KnotAnnotSV (either HTML of Excel output)
+        Structure: [ val(meta), path(knotannotsv_output) ]
+      pattern: "*.{html,xlsm}"
+  - vcf2circos_out:
+      type: file
+      description: |
+        Channel containing output files of vcf2circos (either a plot or a JSON)
+        Structure: [ val(meta), path(circos_out) ]
+      pattern: "*.{html,png,jpg,jpeg,webp,svg,pdf,eps,json}"
   - versions:
       type: file
       description: |
