@@ -3,6 +3,7 @@ include { UNTAR as UNTAR_VCF2CIRCOS  } from '../../../modules/nf-core/untar/main
 include { ANNOTSV_INSTALLANNOTATIONS } from '../../../modules/nf-core/annotsv/installannotations/main'
 include { ANNOTSV_ANNOTSV            } from '../../../modules/nf-core/annotsv/annotsv/main'
 include { KNOTANNOTSV                } from '../../../modules/nf-core/knotannotsv/main'
+include { VCF2CIRCOS_INSTALLANNOTATIONS                 } from '../../../modules/nf-core/vcf2circos/installannotations/main'
 include { VCF2CIRCOS                 } from '../../../modules/nf-core/vcf2circos/main'
 
 workflow VCF_ANNOTATE_ANNOTSV {
@@ -57,26 +58,19 @@ workflow VCF_ANNOTATE_ANNOTSV {
         .set { ch_knot_in }
     KNOTANNOTSV(ch_knot_in)
 
-    // Run vcf2circos on sub-wf input VCF
+    // Run vcf2circos on sub-workflow input VCF
     if (!vcf2circos_annotations) {
-        UNTAR_VCF2CIRCOS([[], 'https://www.lbgi.fr/~lamouche/vcf2circos/config_vcf2circos_29032023.tar.gz'])
-        UNTAR_VCF2CIRCOS.out.untar
+        VCF2CIRCOS_INSTALLANNOTATIONS()
+        VCF2CIRCOS_INSTALLANNOTATIONS.out.annotations
+            .map { annotations -> [[id: "vcf2circos"], annotations] }
             .collect()
             .set { ch_vcf2circos_annot }
     }
     else {
-        if (vcf2circos_annotations.endsWith(".tar.gz")) {
-            UNTAR_VCF2CIRCOS(vcf2circos_annotations)
-            UNTAR_VCF2CIRCOS.out.untar
-                .collect()
-                .set { ch_vcf2circos_annot }
-        }
-        else {
-            channel.fromPath(vcf2circos_annotations)
-                .map { annotations -> [[id: "vcf2circos"], annotations] }
-                .collect()
-                .set { ch_vcf2circos_annot }
-        }
+        channel.fromPath(vcf2circos_annotations)
+            .map { annotations -> [[id: "vcf2circos"], annotations] }
+            .collect()
+            .set { ch_vcf2circos_annot }
     }
     ch_vcf
         .map { meta, vcf, vcf_index, _candidate_small_variants, _knot_output_xl, vcf2circos_extension -> [meta, vcf, vcf_index, vcf2circos_extension] }

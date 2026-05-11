@@ -18,6 +18,7 @@ nextflow_workflow {
 
 
     test("homo_sapiens - vcf, download_annotsv_cache, download_vcf2circos_cache, knot_out_html, circos_out_html") {
+        tag "TODO"
 
         when {
             workflow {
@@ -31,7 +32,7 @@ nextflow_workflow {
                     'html'
                 ])
                 input[1] = '/data/work/CHUUMI/felix/data/AnnotSV_annotations-v3.5'
-                input[2] = '/data/work/CHUUMI/felix/data/vcf2circos/Static'
+                input[2] = []
                 input[3] = channel.of([
                     [ id:'test' ],
                     []
