@@ -4,7 +4,7 @@ include { ANNOTSV_INSTALLANNOTATIONS } from '../../../modules/nf-core/annotsv/in
 include { ANNOTSV_ANNOTSV            } from '../../../modules/nf-core/annotsv/annotsv/main'
 include { KNOTANNOTSV                } from '../../../modules/nf-core/knotannotsv/main'
 include { VCF2CIRCOS_INSTALLANNOTATIONS                 } from '../../../modules/nf-core/vcf2circos/installannotations/main'
-include { VCF2CIRCOS                 } from '../../../modules/nf-core/vcf2circos/main'
+include { VCF2CIRCOS_VCF2CIRCOS                 } from '../../../modules/nf-core/vcf2circos/vcf2circos/main'
 
 workflow VCF_ANNOTATE_ANNOTSV {
     take:
@@ -75,7 +75,7 @@ workflow VCF_ANNOTATE_ANNOTSV {
     ch_vcf
         .map { meta, vcf, vcf_index, _candidate_small_variants, _knot_output_xl, vcf2circos_extension -> [meta, vcf, vcf_index, vcf2circos_extension] }
         .set { ch_vcf2circos_in }
-    VCF2CIRCOS(
+    VCF2CIRCOS_VCF2CIRCOS(
         ch_vcf2circos_in,
         ch_vcf2circos_annot,
     )
@@ -84,5 +84,5 @@ workflow VCF_ANNOTATE_ANNOTSV {
     annotsv_tsv             = ANNOTSV_ANNOTSV.out.tsv // channel: [ val(meta), [ annotsv_tsv ] ]
     annotsv_unannotated_tsv = ANNOTSV_ANNOTSV.out.unannotated_tsv // channel: [ val(meta), [ annotsv_unannotated_tsv ] ]
     knotannotsv_out         = KNOTANNOTSV.out.output_file // channel: [ val(meta), [ knot_out ] ]
-    vcf2circos_out          = VCF2CIRCOS.out.circos // channel: [ val(meta), [ circos_plot ] ]
+    vcf2circos_out          = VCF2CIRCOS_VCF2CIRCOS.out.circos // channel: [ val(meta), [ circos_plot ] ]
 }
