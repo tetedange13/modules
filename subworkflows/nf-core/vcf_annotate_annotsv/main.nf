@@ -1,10 +1,10 @@
-include { UNTAR as UNTAR_ANNOTSV     } from '../../../modules/nf-core/untar/main'
-include { UNTAR as UNTAR_VCF2CIRCOS  } from '../../../modules/nf-core/untar/main'
-include { ANNOTSV_INSTALLANNOTATIONS } from '../../../modules/nf-core/annotsv/installannotations/main'
-include { ANNOTSV_ANNOTSV            } from '../../../modules/nf-core/annotsv/annotsv/main'
-include { KNOTANNOTSV                } from '../../../modules/nf-core/knotannotsv/main'
-include { VCF2CIRCOS_INSTALLANNOTATIONS                 } from '../../../modules/nf-core/vcf2circos/installannotations/main'
-include { VCF2CIRCOS_VCF2CIRCOS                 } from '../../../modules/nf-core/vcf2circos/vcf2circos/main'
+include { UNTAR as UNTAR_ANNOTSV        } from '../../../modules/nf-core/untar/main'
+include { UNTAR as UNTAR_VCF2CIRCOS     } from '../../../modules/nf-core/untar/main'
+include { ANNOTSV_INSTALLANNOTATIONS    } from '../../../modules/nf-core/annotsv/installannotations/main'
+include { ANNOTSV_ANNOTSV               } from '../../../modules/nf-core/annotsv/annotsv/main'
+include { KNOTANNOTSV                   } from '../../../modules/nf-core/knotannotsv/main'
+include { VCF2CIRCOS_INSTALLANNOTATIONS } from '../../../modules/nf-core/vcf2circos/installannotations/main'
+include { VCF2CIRCOS_VCF2CIRCOS         } from '../../../modules/nf-core/vcf2circos/vcf2circos/main'
 
 workflow VCF_ANNOTATE_ANNOTSV {
     take:
@@ -58,7 +58,7 @@ workflow VCF_ANNOTATE_ANNOTSV {
         .set { ch_knot_in }
     KNOTANNOTSV(ch_knot_in)
 
-    // Run vcf2circos on sub-workflow input VCF
+    // Run vcf2circos on sub-workflow's input VCF
     if (!vcf2circos_annotations) {
         VCF2CIRCOS_INSTALLANNOTATIONS()
         VCF2CIRCOS_INSTALLANNOTATIONS.out.annotations
