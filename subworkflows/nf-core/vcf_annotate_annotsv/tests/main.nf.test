@@ -125,7 +125,7 @@ nextflow_workflow {
                     'html'
                 ])
                 input[1] = []
-                input[2] = 'replace/me/with/empty/list/'
+                input[2] = []
                 input[3] = channel.of([
                     [ id:'test' ],
                     []
