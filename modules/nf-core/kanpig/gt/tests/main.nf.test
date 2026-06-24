@@ -1,7 +1,5 @@
 nextflow_process {
 
-    config "./nextflow.config"
-
     name "Test Process KANPIG_GT"
     script "../main.nf"
     process "KANPIG_GT"
@@ -13,24 +11,15 @@ nextflow_process {
     tag "samtools/faidx"
 
     setup {
-        run("SEQKIT_REPLACE") {
-            script "../../../seqkit/replace/main.nf"
-            process {
-                """
-                input[0] = [
-                    [ id:'no_chr_genome' ],
-                    file(params.modules_testdata_base_path + 'genomics/homo_sapiens/genome/chr21/sequence/genome.fasta', checkIfExists: true)
-                ]
-                input[1] = ''
-                """
-            }
-        }
-        run("SAMTOOLS_FAIDX", alias: "SAMTOOLS_FAIDX2") {
+        run("SAMTOOLS_FAIDX") {
             script "../../../samtools/faidx/main.nf"
             process {
                 """
-                input[0] = SEQKIT_REPLACE.out.fastx
-                            .map { meta, fastx -> [ meta, fastx, [] ] }
+                input[0] = [
+                    [ id:'test' ],
+                    file(params.modules_testdata_base_path + 'genomics/homo_sapiens/genome/genome.fasta', checkIfExists: true),
+                    []
+                ]
                 input[1] = false
                 """
             }
@@ -40,24 +29,22 @@ nextflow_process {
     test("kanpig - gt - vcf") {
 
         when {
-            params {
-                module_args2 = "--pattern 'chr' --replacement ''"
-            }
-
             process {
                 """
                 input[0] = [
-                    [ id:'test' ], // meta map
-                    file(params.modules_testdata_base_path + 'genomics/homo_sapiens/genome/vcf/ped/justhusky_minimal.vcf.gz', checkIfExists: true),
-                    file(params.modules_testdata_base_path + 'genomics/homo_sapiens/genome/vcf/ped/justhusky_minimal.vcf.gz.tbi', checkIfExists: true),
-                    file(params.modules_testdata_base_path + 'genomics/homo_sapiens/illumina/bam/earlycasualcaiman_sorted_md.bam', checkIfExists: true),
-                    file(params.modules_testdata_base_path + 'genomics/homo_sapiens/illumina/bam/earlycasualcaiman_sorted_md.bam.bai', checkIfExists: true),
+                    [ id:'test' ],
+                    file(params.modules_testdata_base_path + 'genomics/homo_sapiens/illumina/vcf/sv_query.vcf.gz', checkIfExists: true),
+                    file(params.modules_testdata_base_path + 'genomics/homo_sapiens/illumina/vcf/sv_query.vcf.gz.tbi', checkIfExists: true),
+                    file(params.modules_testdata_base_path + 'genomics/homo_sapiens/illumina/bam/test.paired_end.sorted.bam', checkIfExists: true),
+                    file(params.modules_testdata_base_path + 'genomics/homo_sapiens/illumina/bam/test.paired_end.sorted.bam.bai', checkIfExists: true),
                     [],
                     [],
                 ]
 
-                input[1] = SEQKIT_REPLACE.out.fastx
-                            .join(SAMTOOLS_FAIDX2.out.fai)
+                input[1] = Channel.of([
+                    [ id:'test' ],
+                    file(params.modules_testdata_base_path + 'genomics/homo_sapiens/genome/genome.fasta', checkIfExists: true)
+                ]).join(SAMTOOLS_FAIDX.out.fai)
                 """
             }
         }
@@ -83,17 +70,19 @@ nextflow_process {
             process {
                 """
                 input[0] = [
-                    [ id:'test' ], // meta map
-                    file(params.modules_testdata_base_path + 'genomics/homo_sapiens/genome/vcf/ped/justhusky_minimal.vcf.gz', checkIfExists: true),
-                    file(params.modules_testdata_base_path + 'genomics/homo_sapiens/genome/vcf/ped/justhusky_minimal.vcf.gz.tbi', checkIfExists: true),
-                    file(params.modules_testdata_base_path + 'genomics/homo_sapiens/illumina/bam/earlycasualcaiman_sorted_md.bam', checkIfExists: true),
-                    file(params.modules_testdata_base_path + 'genomics/homo_sapiens/illumina/bam/earlycasualcaiman_sorted_md.bam.bai', checkIfExists: true),
+                    [ id:'test' ],
+                    file(params.modules_testdata_base_path + 'genomics/homo_sapiens/illumina/vcf/sv_query.vcf.gz', checkIfExists: true),
+                    file(params.modules_testdata_base_path + 'genomics/homo_sapiens/illumina/vcf/sv_query.vcf.gz.tbi', checkIfExists: true),
+                    file(params.modules_testdata_base_path + 'genomics/homo_sapiens/illumina/bam/test.paired_end.sorted.bam', checkIfExists: true),
+                    file(params.modules_testdata_base_path + 'genomics/homo_sapiens/illumina/bam/test.paired_end.sorted.bam.bai', checkIfExists: true),
                     [],
                     [],
                 ]
 
-                input[1] = SEQKIT_REPLACE.out.fastx
-                            .join(SAMTOOLS_FAIDX2.out.fai)
+                input[1] = Channel.of([
+                    [ id:'test' ],
+                    file(params.modules_testdata_base_path + 'genomics/homo_sapiens/genome/genome.fasta', checkIfExists: true)
+                ]).join(SAMTOOLS_FAIDX.out.fai)
                 """
             }
         }

@@ -21,15 +21,19 @@ process KANPIG_GT {
     script:
     def args = task.ext.args ?: ''
     def prefix = task.ext.prefix ?: "${meta.id}"
+    def restrict = restrict_bed ? "--bed ${restrict_bed}" : ""
+    def ploidy = ploidy_bed ? "--ploidy-bed ${ploidy_bed}" : ""
     """
     kanpig \\
         gt \\
         --input ${vcf} \\
         --reads ${bam} \\
         --reference ${fasta} \\
-        --out ${prefix}.vcf \\
+        ${args} \\
+        ${restrict} \\
+        ${ploidy} \\
         --threads ${task.cpus} \\
-        ${args}
+        --out ${prefix}.vcf
     """
 
     stub:
